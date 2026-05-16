@@ -646,4 +646,7 @@
     <string name="playback_buffer_auto">Auto</string>
     <string name="playback_buffer_large">Large</string>
     <string name="playback_buffer_extra_large">Extra large</string>
+    <string name="lbl_subtitle_offset">Subtitle offset</string>
+    <string name="lbl_subtitle_offset_current">Subtitle offset %1$s</string>
+    <string name="lbl_reset">Reset</string>
 </resources>
