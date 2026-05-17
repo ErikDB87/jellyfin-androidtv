@@ -14,7 +14,8 @@ android {
 		targetSdk = libs.versions.android.targetSdk.get().toInt()
 
 		// Release version
-		applicationId = namespace
+		//applicationId = namespace
+		applicationId = "org.jellyfin.androidtv.subtitle_offset"
 		versionName = project.getVersionName()
 		versionCode = getVersionCode(versionName!!)
 	}
@@ -63,7 +64,8 @@ android {
 			resValue("string", "app_search_suggest_intent_data", "content://${namespace}.content/intent")
 
 			// Set flavored application name
-			resValue("string", "app_name", "@string/app_name_release")
+			//resValue("string", "app_name", "@string/app_name_release")
+			resValue("string", "app_name", "@string/app_name_subtitle_offset")
 
 			buildConfigField("boolean", "DEVELOPMENT", "false")
 
