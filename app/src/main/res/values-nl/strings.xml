@@ -660,4 +660,9 @@
     <string name="playback_info_channels">Kanalen: %1$d</string>
     <string name="playback_info_video_range">Beeldbereik: %1$s</string>
     <string name="playback_info_transcoding_note">Server transcodeert dit bestand</string>
+    <string name="lbl_subtitle_offset">Ondertitelvertraging</string>
+    <string name="lbl_subtitle_offset_current">Ondertitelvertraging %1$s</string>
+    <string name="lbl_reset">Herstel</string>
+    <string name="lbl_help">Hulp</string>
+    <string name="lbl_subtitle_offset_help">Ondertitels te laat: gebruik − | Ondertitels te vroeg: gebruik +</string>
 </resources>
