@@ -1,43 +1,25 @@
 package org.jellyfin.androidtv.ui.playback;
 
-import java.text.Format;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.logging.Handler;
-
-import javax.naming.Context;
-import javax.swing.text.View;
-
-import org.jellyfin.androidtv.R;
-import org.jellyfin.androidtv.data.compat.StreamInfo;
-import org.jellyfin.androidtv.preference.UserPreferences;
-import org.jellyfin.androidtv.preference.constant.BufferLength;
-import org.jellyfin.androidtv.preference.constant.ZoomMode;
-import org.jellyfin.playback.media3.exoplayer.subtitle.SubtitleTimingOffsetRenderersFactory;
-import org.jellyfin.playback.media3.exoplayer.subtitle.SubtitleTimingOffsetState;
-import org.jellyfin.sdk.api.client.ApiClient;
-import org.jellyfin.sdk.model.api.MediaStream;
-import org.jellyfin.sdk.model.api.MediaStreamType;
-import org.jellyfin.sdk.model.api.SubtitleDeliveryMethod;
-import org.koin.java.KoinJavaComponent;
-
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.media.audiofx.DynamicsProcessing;
 import android.media.audiofx.DynamicsProcessing.Limiter;
 import android.media.audiofx.Equalizer;
 import android.net.Uri;
+import android.os.Handler;
 import android.util.TypedValue;
+import android.view.View;
 import android.widget.FrameLayout;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.OptIn;
 import androidx.core.graphics.TypefaceCompat;
 import androidx.media3.common.AudioAttributes;
 import androidx.media3.common.C;
+import androidx.media3.common.Format;
 import androidx.media3.common.MediaItem;
 import androidx.media3.common.PlaybackException;
 import androidx.media3.common.PlaybackParameters;
@@ -65,6 +47,25 @@ import androidx.media3.extractor.ts.TsExtractor;
 import androidx.media3.ui.AspectRatioFrameLayout;
 import androidx.media3.ui.CaptionStyleCompat;
 import androidx.media3.ui.PlayerView;
+
+import org.jellyfin.androidtv.R;
+import org.jellyfin.androidtv.data.compat.StreamInfo;
+import org.jellyfin.androidtv.preference.UserPreferences;
+import org.jellyfin.androidtv.preference.constant.BufferLength;
+import org.jellyfin.androidtv.preference.constant.ZoomMode;
+import org.jellyfin.playback.media3.exoplayer.subtitle.SubtitleTimingOffsetRenderersFactory;
+import org.jellyfin.playback.media3.exoplayer.subtitle.SubtitleTimingOffsetState;
+import org.jellyfin.sdk.api.client.ApiClient;
+import org.jellyfin.sdk.model.api.MediaStream;
+import org.jellyfin.sdk.model.api.MediaStreamType;
+import org.jellyfin.sdk.model.api.SubtitleDeliveryMethod;
+import org.koin.java.KoinJavaComponent;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
 import io.github.peerless2012.ass.media.AssHandler;
 import io.github.peerless2012.ass.media.AssHandlerConfig;
 import io.github.peerless2012.ass.media.factory.AssRenderersFactory;
@@ -619,6 +620,7 @@ public class VideoManager {
     public long getSubtitleTimingOffsetUs() {
         return subtitleTimingOffsetState.getOffsetUs();
     }
+
 
     public void adjustSubtitleTimingOffsetUs(long deltaUs) {
         subtitleTimingOffsetState.adjustOffsetUs(deltaUs);
