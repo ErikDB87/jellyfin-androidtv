@@ -44,6 +44,7 @@ class SubtitleOffsetPopup(
 	private var repeatAction: ((Long) -> Unit)? = null
 
 	private var dialog: Dialog? = null
+	private var helpDialog: Dialog? = null
 	val isShowing: Boolean get() = dialog?.isShowing == true
 
 	fun show(
@@ -60,6 +61,7 @@ class SubtitleOffsetPopup(
 		val rowSpacing = (10 * density).toInt()
 		val buttonSpacing = (8 * density).toInt()
 		val panelTopMargin = (32 * density).toInt()
+		var mainHeight = 0
 
 		val container = LinearLayout(context).apply {
 			orientation = LinearLayout.VERTICAL
@@ -137,6 +139,45 @@ class SubtitleOffsetPopup(
 			}
 		}
 
+		fun showHelpPopup(anchorDialog: Dialog) {
+			val helpContainer = TextView(context).apply {
+				text = context.getString(R.string.lbl_subtitle_offset_help)
+				setTextColor(Color.WHITE)
+				setTextSize(TypedValue.COMPLEX_UNIT_SP, 15f)
+				gravity = Gravity.CENTER
+				background = context.getDrawable(R.drawable.subtitle_offset_panel)
+				setPadding(panelPaddingHorizontal, panelPaddingVertical, panelPaddingHorizontal, panelPaddingVertical)
+			}
+
+			helpDialog = Dialog(context, R.style.Theme_Jellyfin_Dialog).apply {
+				requestWindowFeature(Window.FEATURE_NO_TITLE)
+				setContentView(helpContainer)
+				setCanceledOnTouchOutside(false)
+				window?.apply {
+					setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+					clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
+					setDimAmount(0f)
+					attributes = attributes.apply {
+						width = WindowManager.LayoutParams.WRAP_CONTENT
+						height = mainHeight
+						gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
+						y = panelTopMargin
+					}
+				}
+				setOnDismissListener {
+					anchorDialog.window?.attributes = anchorDialog.window?.attributes?.apply {
+						y = panelTopMargin
+					}
+					helpDialog = null
+				}
+				show()
+
+				anchorDialog.window?.attributes = anchorDialog.window?.attributes?.apply {
+					y = panelTopMargin + mainHeight
+				}
+			}
+		}
+
 		val adjustmentButtons = listOf(
 			createButton(formatOffset(-OFFSET_US_500MS)) { applyOffsetDelta(-OFFSET_US_500MS) },
 			createButton(formatOffset(-OFFSET_US_100MS)) { applyOffsetDelta(-OFFSET_US_100MS) },
@@ -171,6 +212,12 @@ class SubtitleOffsetPopup(
 				gravity = Gravity.CENTER_HORIZONTAL
 			},
 		)
+
+		container.measure(
+			ViewGroup.LayoutParams.WRAP_CONTENT,
+			ViewGroup.LayoutParams.WRAP_CONTENT
+		)
+		mainHeight = container.measuredHeight
 
 		repeatAction = { deltaUs -> applyOffsetDelta(deltaUs) }
 
@@ -217,6 +264,7 @@ class SubtitleOffsetPopup(
 
 	fun dismiss() {
 		dialog?.dismiss()
+		helpDialog?.dismiss()
 	}
 
 	private fun handleRepeatKey(event: KeyEvent, deltaUs: Long): Boolean {
