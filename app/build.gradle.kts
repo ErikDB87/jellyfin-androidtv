@@ -64,8 +64,7 @@ android {
 			resValue("string", "app_search_suggest_intent_data", "content://${namespace}.content/intent")
 
 			// Set flavored application name
-			//resValue("string", "app_name", "@string/app_name_release")
-			resValue("string", "app_name", "@string/app_name_subtitle_offset")
+			resValue("string", "app_name", "@string/app_name_release")
 
 			buildConfigField("boolean", "DEVELOPMENT", "false")
 
@@ -83,7 +82,7 @@ android {
 
 			// Set flavored application name
 			//resValue("string", "app_name", "@string/app_name_debug")
-			resValue("string", "app_name", "Jellyfin Debug")
+			resValue("string", "app_name", "@string/app_name_subtitle_offset")
 
 			buildConfigField("boolean", "DEVELOPMENT", (defaultConfig.versionCode!! < 100).toString())
 		}
