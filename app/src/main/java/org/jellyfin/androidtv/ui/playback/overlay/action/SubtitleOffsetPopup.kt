@@ -61,7 +61,6 @@ class SubtitleOffsetPopup(
 		val rowSpacing = (10 * density).toInt()
 		val buttonSpacing = (8 * density).toInt()
 		val panelTopMargin = (32 * density).toInt()
-		var mainHeight = 0
 
 		val container = LinearLayout(context).apply {
 			orientation = LinearLayout.VERTICAL
@@ -149,6 +148,12 @@ class SubtitleOffsetPopup(
 				setPadding(panelPaddingHorizontal, panelPaddingVertical, panelPaddingHorizontal, panelPaddingVertical)
 			}
 
+			helpContainer.measure(
+				ViewGroup.LayoutParams.WRAP_CONTENT,
+				ViewGroup.LayoutParams.WRAP_CONTENT
+			)
+			val helpHeight = helpContainer.measuredHeight
+
 			helpDialog = Dialog(context, R.style.Theme_Jellyfin_Dialog).apply {
 				requestWindowFeature(Window.FEATURE_NO_TITLE)
 				setContentView(helpContainer)
@@ -173,7 +178,7 @@ class SubtitleOffsetPopup(
 				show()
 
 				anchorDialog.window?.attributes = anchorDialog.window?.attributes?.apply {
-					y = panelTopMargin + mainHeight
+					y = panelTopMargin + helpHeight
 				}
 			}
 		}
@@ -217,7 +222,7 @@ class SubtitleOffsetPopup(
 			ViewGroup.LayoutParams.WRAP_CONTENT,
 			ViewGroup.LayoutParams.WRAP_CONTENT
 		)
-		mainHeight = container.measuredHeight
+		val mainHeight = container.measuredHeight
 
 		repeatAction = { deltaUs -> applyOffsetDelta(deltaUs) }
 
