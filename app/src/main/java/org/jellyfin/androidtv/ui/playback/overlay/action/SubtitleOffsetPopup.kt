@@ -159,7 +159,7 @@ class SubtitleOffsetPopup(
 					setDimAmount(0f)
 					attributes = attributes.apply {
 						width = WindowManager.LayoutParams.WRAP_CONTENT
-						height = mainHeight
+						height = WindowManager.LayoutParams.WRAP_CONTENT
 						gravity = Gravity.TOP or Gravity.CENTER_HORIZONTAL
 						y = panelTopMargin
 					}
